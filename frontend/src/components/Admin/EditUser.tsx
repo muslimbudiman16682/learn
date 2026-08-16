@@ -5,7 +5,7 @@ import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
-import { RolesService, type UserPublic, UsersService } from "@/client"
+import { RolesService, type UserPublic, type UserUpdate, UsersService } from "@/client"
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
 import {
@@ -92,7 +92,7 @@ const EditUser = ({ user, onSuccess }: EditUserProps) => {
   })
 
   const mutation = useMutation({
-    mutationFn: (data: Record<string, unknown>) =>
+    mutationFn: (data: UserUpdate) =>
       UsersService.updateUser({ path: { user_id: user.id }, body: data }),
     onSuccess: () => {
       showSuccessToast("User updated successfully")
@@ -108,7 +108,7 @@ const EditUser = ({ user, onSuccess }: EditUserProps) => {
   const onSubmit = (data: FormData) => {
     // exclude confirm_password from submission data and remove password if empty
     const { confirm_password: _, role_id, ...rest } = data
-    const submitData: Record<string, unknown> = {
+    const submitData: UserUpdate = {
       ...rest,
       role_id: role_id === NO_ROLE ? null : role_id,
     }
