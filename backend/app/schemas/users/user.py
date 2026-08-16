@@ -9,6 +9,7 @@ from app.models.users.user import UserBase
 
 class UserCreate(UserBase):
     password: str = Field(min_length=8, max_length=128)
+    role_id: uuid.UUID | None = None
 
 
 class UserRegister(SQLModel):
@@ -23,6 +24,7 @@ class UserUpdate(SQLModel):
     is_superuser: bool | None = None
     full_name: str | None = Field(default=None, max_length=255)
     password: str | None = Field(default=None, min_length=8, max_length=128)
+    role_id: uuid.UUID | None = None
 
 
 class UserUpdateMe(SQLModel):
@@ -38,6 +40,7 @@ class UpdatePassword(SQLModel):
 class UserPublic(UserBase):
     id: uuid.UUID
     created_at: datetime | None = None
+    role_id: uuid.UUID | None = None
 
 
 class UsersPublic(SQLModel):

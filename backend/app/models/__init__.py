@@ -10,6 +10,12 @@ SQLModel.metadata will silently miss that table.
 from sqlmodel import SQLModel
 
 from app.models.items.item import Item, ItemBase
+from app.models.permissions.permission import (
+    Permission,
+    PermissionBase,
+    RolePermissionLink,
+)
+from app.models.roles.role import Role, RoleBase
 from app.models.users.user import User, UserBase
 
 __all__ = [
@@ -18,4 +24,9 @@ __all__ = [
     "UserBase",
     "Item",
     "ItemBase",
+    "Role",
+    "RoleBase",
+    "Permission",
+    "PermissionBase",
+    "RolePermissionLink",
 ]

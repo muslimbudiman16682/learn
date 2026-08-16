@@ -5,6 +5,21 @@ domain's module here too.
 """
 
 from app.crud.items import create_item
+from app.crud.permissions import (
+    create_permission,
+    delete_permission,
+    get_permission,
+    get_permission_by_code,
+    update_permission,
+)
+from app.crud.roles import (
+    create_role,
+    delete_role,
+    get_role,
+    get_role_by_name,
+    set_role_permissions,
+    update_role,
+)
 from app.crud.users import (
     DUMMY_HASH,
     authenticate,
@@ -15,6 +30,17 @@ from app.crud.users import (
 
 __all__ = [
     "create_item",
+    "create_permission",
+    "delete_permission",
+    "get_permission",
+    "get_permission_by_code",
+    "update_permission",
+    "create_role",
+    "delete_role",
+    "get_role",
+    "get_role_by_name",
+    "set_role_permissions",
+    "update_role",
     "DUMMY_HASH",
     "authenticate",
     "create_user",

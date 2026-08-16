@@ -137,6 +137,70 @@ export type NewPassword = {
 };
 
 /**
+ * PermissionCreate
+ */
+export type PermissionCreate = {
+    /**
+     * Code
+     */
+    code: string;
+    /**
+     * Description
+     */
+    description?: string | null;
+};
+
+/**
+ * PermissionPublic
+ */
+export type PermissionPublic = {
+    /**
+     * Code
+     */
+    code: string;
+    /**
+     * Description
+     */
+    description?: string | null;
+    /**
+     * Id
+     */
+    id: string;
+    /**
+     * Created At
+     */
+    created_at?: string | null;
+};
+
+/**
+ * PermissionUpdate
+ */
+export type PermissionUpdate = {
+    /**
+     * Code
+     */
+    code?: string | null;
+    /**
+     * Description
+     */
+    description?: string | null;
+};
+
+/**
+ * PermissionsPublic
+ */
+export type PermissionsPublic = {
+    /**
+     * Data
+     */
+    data: Array<PermissionPublic>;
+    /**
+     * Count
+     */
+    count: number;
+};
+
+/**
  * PrivateUserCreate
  */
 export type PrivateUserCreate = {
@@ -156,6 +220,85 @@ export type PrivateUserCreate = {
      * Is Verified
      */
     is_verified?: boolean;
+};
+
+/**
+ * RoleCreate
+ */
+export type RoleCreate = {
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Description
+     */
+    description?: string | null;
+};
+
+/**
+ * RolePermissionsAssign
+ * Body for PUT /roles/{role_id}/permissions -- replaces the full set.
+ */
+export type RolePermissionsAssign = {
+    /**
+     * Permission Ids
+     */
+    permission_ids: Array<string>;
+};
+
+/**
+ * RolePublic
+ */
+export type RolePublic = {
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Description
+     */
+    description?: string | null;
+    /**
+     * Id
+     */
+    id: string;
+    /**
+     * Created At
+     */
+    created_at?: string | null;
+    /**
+     * Permissions
+     */
+    permissions?: Array<PermissionPublic>;
+};
+
+/**
+ * RoleUpdate
+ */
+export type RoleUpdate = {
+    /**
+     * Name
+     */
+    name?: string | null;
+    /**
+     * Description
+     */
+    description?: string | null;
+};
+
+/**
+ * RolesPublic
+ */
+export type RolesPublic = {
+    /**
+     * Data
+     */
+    data: Array<RolePublic>;
+    /**
+     * Count
+     */
+    count: number;
 };
 
 /**
@@ -210,6 +353,10 @@ export type UserCreate = {
      * Password
      */
     password: string;
+    /**
+     * Role Id
+     */
+    role_id?: string | null;
 };
 
 /**
@@ -240,6 +387,10 @@ export type UserPublic = {
      * Created At
      */
     created_at?: string | null;
+    /**
+     * Role Id
+     */
+    role_id?: string | null;
 };
 
 /**
@@ -284,6 +435,10 @@ export type UserUpdate = {
      * Password
      */
     password?: string | null;
+    /**
+     * Role Id
+     */
+    role_id?: string | null;
 };
 
 /**
@@ -920,6 +1075,334 @@ export type itemsUpdateItemResponses = {
 };
 
 export type itemsUpdateItemResponse = itemsUpdateItemResponses[keyof itemsUpdateItemResponses];
+
+export type rolesReadRolesData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Skip
+         */
+        skip?: number;
+        /**
+         * Limit
+         */
+        limit?: number;
+    };
+    url: '/api/v1/roles/';
+};
+
+export type rolesReadRolesErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type rolesReadRolesError = rolesReadRolesErrors[keyof rolesReadRolesErrors];
+
+export type rolesReadRolesResponses = {
+    /**
+     * Successful Response
+     */
+    200: RolesPublic;
+};
+
+export type rolesReadRolesResponse = rolesReadRolesResponses[keyof rolesReadRolesResponses];
+
+export type rolesReadRoleData = {
+    body?: never;
+    path: {
+        /**
+         * Role Id
+         */
+        role_id: string;
+    };
+    query?: never;
+    url: '/api/v1/roles/{role_id}';
+};
+
+export type rolesReadRoleErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type rolesReadRoleError = rolesReadRoleErrors[keyof rolesReadRoleErrors];
+
+export type rolesReadRoleResponses = {
+    /**
+     * Successful Response
+     */
+    200: RolePublic;
+};
+
+export type rolesReadRoleResponse = rolesReadRoleResponses[keyof rolesReadRoleResponses];
+
+export type rolesCreateRoleData = {
+    body: RoleCreate;
+    path?: never;
+    query?: never;
+    url: '/api/v1/roles/';
+};
+
+export type rolesCreateRoleErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type rolesCreateRoleError = rolesCreateRoleErrors[keyof rolesCreateRoleErrors];
+
+export type rolesCreateRoleResponses = {
+    /**
+     * Successful Response
+     */
+    200: RolePublic;
+};
+
+export type rolesCreateRoleResponse = rolesCreateRoleResponses[keyof rolesCreateRoleResponses];
+
+export type rolesUpdateRoleData = {
+    body: RoleUpdate;
+    path: {
+        /**
+         * Role Id
+         */
+        role_id: string;
+    };
+    query?: never;
+    url: '/api/v1/roles/{role_id}';
+};
+
+export type rolesUpdateRoleErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type rolesUpdateRoleError = rolesUpdateRoleErrors[keyof rolesUpdateRoleErrors];
+
+export type rolesUpdateRoleResponses = {
+    /**
+     * Successful Response
+     */
+    200: RolePublic;
+};
+
+export type rolesUpdateRoleResponse = rolesUpdateRoleResponses[keyof rolesUpdateRoleResponses];
+
+export type rolesAssignRolePermissionsData = {
+    body: RolePermissionsAssign;
+    path: {
+        /**
+         * Role Id
+         */
+        role_id: string;
+    };
+    query?: never;
+    url: '/api/v1/roles/{role_id}/permissions';
+};
+
+export type rolesAssignRolePermissionsErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type rolesAssignRolePermissionsError = rolesAssignRolePermissionsErrors[keyof rolesAssignRolePermissionsErrors];
+
+export type rolesAssignRolePermissionsResponses = {
+    /**
+     * Successful Response
+     */
+    200: RolePublic;
+};
+
+export type rolesAssignRolePermissionsResponse = rolesAssignRolePermissionsResponses[keyof rolesAssignRolePermissionsResponses];
+
+export type rolesDeleteRoleData = {
+    body?: never;
+    path: {
+        /**
+         * Role Id
+         */
+        role_id: string;
+    };
+    query?: never;
+    url: '/api/v1/roles/{role_id}';
+};
+
+export type rolesDeleteRoleErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type rolesDeleteRoleError = rolesDeleteRoleErrors[keyof rolesDeleteRoleErrors];
+
+export type rolesDeleteRoleResponses = {
+    /**
+     * Successful Response
+     */
+    200: Message;
+};
+
+export type rolesDeleteRoleResponse = rolesDeleteRoleResponses[keyof rolesDeleteRoleResponses];
+
+export type permissionsReadPermissionsData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Skip
+         */
+        skip?: number;
+        /**
+         * Limit
+         */
+        limit?: number;
+    };
+    url: '/api/v1/permissions/';
+};
+
+export type permissionsReadPermissionsErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type permissionsReadPermissionsError = permissionsReadPermissionsErrors[keyof permissionsReadPermissionsErrors];
+
+export type permissionsReadPermissionsResponses = {
+    /**
+     * Successful Response
+     */
+    200: PermissionsPublic;
+};
+
+export type permissionsReadPermissionsResponse = permissionsReadPermissionsResponses[keyof permissionsReadPermissionsResponses];
+
+export type permissionsReadPermissionData = {
+    body?: never;
+    path: {
+        /**
+         * Permission Id
+         */
+        permission_id: string;
+    };
+    query?: never;
+    url: '/api/v1/permissions/{permission_id}';
+};
+
+export type permissionsReadPermissionErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type permissionsReadPermissionError = permissionsReadPermissionErrors[keyof permissionsReadPermissionErrors];
+
+export type permissionsReadPermissionResponses = {
+    /**
+     * Successful Response
+     */
+    200: PermissionPublic;
+};
+
+export type permissionsReadPermissionResponse = permissionsReadPermissionResponses[keyof permissionsReadPermissionResponses];
+
+export type permissionsCreatePermissionData = {
+    body: PermissionCreate;
+    path?: never;
+    query?: never;
+    url: '/api/v1/permissions/';
+};
+
+export type permissionsCreatePermissionErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type permissionsCreatePermissionError = permissionsCreatePermissionErrors[keyof permissionsCreatePermissionErrors];
+
+export type permissionsCreatePermissionResponses = {
+    /**
+     * Successful Response
+     */
+    200: PermissionPublic;
+};
+
+export type permissionsCreatePermissionResponse = permissionsCreatePermissionResponses[keyof permissionsCreatePermissionResponses];
+
+export type permissionsUpdatePermissionData = {
+    body: PermissionUpdate;
+    path: {
+        /**
+         * Permission Id
+         */
+        permission_id: string;
+    };
+    query?: never;
+    url: '/api/v1/permissions/{permission_id}';
+};
+
+export type permissionsUpdatePermissionErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type permissionsUpdatePermissionError = permissionsUpdatePermissionErrors[keyof permissionsUpdatePermissionErrors];
+
+export type permissionsUpdatePermissionResponses = {
+    /**
+     * Successful Response
+     */
+    200: PermissionPublic;
+};
+
+export type permissionsUpdatePermissionResponse = permissionsUpdatePermissionResponses[keyof permissionsUpdatePermissionResponses];
+
+export type permissionsDeletePermissionData = {
+    body?: never;
+    path: {
+        /**
+         * Permission Id
+         */
+        permission_id: string;
+    };
+    query?: never;
+    url: '/api/v1/permissions/{permission_id}';
+};
+
+export type permissionsDeletePermissionErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type permissionsDeletePermissionError = permissionsDeletePermissionErrors[keyof permissionsDeletePermissionErrors];
+
+export type permissionsDeletePermissionResponses = {
+    /**
+     * Successful Response
+     */
+    200: Message;
+};
+
+export type permissionsDeletePermissionResponse = permissionsDeletePermissionResponses[keyof permissionsDeletePermissionResponses];
 
 export type privateCreateUserData = {
     body: PrivateUserCreate;

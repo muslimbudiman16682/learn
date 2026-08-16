@@ -2,7 +2,7 @@
 
 import { type Client, type Options as Options2, type TDataShape, urlSearchParamsBodySerializer } from './client';
 import { client } from './client.gen';
-import type { itemsCreateItemData, itemsCreateItemErrors, itemsCreateItemResponses, itemsDeleteItemData, itemsDeleteItemErrors, itemsDeleteItemResponses, itemsReadItemData, itemsReadItemErrors, itemsReadItemResponses, itemsReadItemsData, itemsReadItemsErrors, itemsReadItemsResponses, itemsUpdateItemData, itemsUpdateItemErrors, itemsUpdateItemResponses, loginLoginAccessTokenData, loginLoginAccessTokenErrors, loginLoginAccessTokenResponses, loginRecoverPasswordData, loginRecoverPasswordErrors, loginRecoverPasswordHtmlContentData, loginRecoverPasswordHtmlContentErrors, loginRecoverPasswordHtmlContentResponses, loginRecoverPasswordResponses, loginResetPasswordData, loginResetPasswordErrors, loginResetPasswordResponses, loginTestTokenData, loginTestTokenResponses, privateCreateUserData, privateCreateUserErrors, privateCreateUserResponses, usersCreateUserData, usersCreateUserErrors, usersCreateUserResponses, usersDeleteUserData, usersDeleteUserErrors, usersDeleteUserMeData, usersDeleteUserMeResponses, usersDeleteUserResponses, usersReadUserByIdData, usersReadUserByIdErrors, usersReadUserByIdResponses, usersReadUserMeData, usersReadUserMeResponses, usersReadUsersData, usersReadUsersErrors, usersReadUsersResponses, usersRegisterUserData, usersRegisterUserErrors, usersRegisterUserResponses, usersUpdatePasswordMeData, usersUpdatePasswordMeErrors, usersUpdatePasswordMeResponses, usersUpdateUserData, usersUpdateUserErrors, usersUpdateUserMeData, usersUpdateUserMeErrors, usersUpdateUserMeResponses, usersUpdateUserResponses, utilsHealthCheckData, utilsHealthCheckResponses, utilsTestEmailData, utilsTestEmailErrors, utilsTestEmailResponses } from './types.gen';
+import type { itemsCreateItemData, itemsCreateItemErrors, itemsCreateItemResponses, itemsDeleteItemData, itemsDeleteItemErrors, itemsDeleteItemResponses, itemsReadItemData, itemsReadItemErrors, itemsReadItemResponses, itemsReadItemsData, itemsReadItemsErrors, itemsReadItemsResponses, itemsUpdateItemData, itemsUpdateItemErrors, itemsUpdateItemResponses, loginLoginAccessTokenData, loginLoginAccessTokenErrors, loginLoginAccessTokenResponses, loginRecoverPasswordData, loginRecoverPasswordErrors, loginRecoverPasswordHtmlContentData, loginRecoverPasswordHtmlContentErrors, loginRecoverPasswordHtmlContentResponses, loginRecoverPasswordResponses, loginResetPasswordData, loginResetPasswordErrors, loginResetPasswordResponses, loginTestTokenData, loginTestTokenResponses, permissionsCreatePermissionData, permissionsCreatePermissionErrors, permissionsCreatePermissionResponses, permissionsDeletePermissionData, permissionsDeletePermissionErrors, permissionsDeletePermissionResponses, permissionsReadPermissionData, permissionsReadPermissionErrors, permissionsReadPermissionResponses, permissionsReadPermissionsData, permissionsReadPermissionsErrors, permissionsReadPermissionsResponses, permissionsUpdatePermissionData, permissionsUpdatePermissionErrors, permissionsUpdatePermissionResponses, privateCreateUserData, privateCreateUserErrors, privateCreateUserResponses, rolesAssignRolePermissionsData, rolesAssignRolePermissionsErrors, rolesAssignRolePermissionsResponses, rolesCreateRoleData, rolesCreateRoleErrors, rolesCreateRoleResponses, rolesDeleteRoleData, rolesDeleteRoleErrors, rolesDeleteRoleResponses, rolesReadRoleData, rolesReadRoleErrors, rolesReadRoleResponses, rolesReadRolesData, rolesReadRolesErrors, rolesReadRolesResponses, rolesUpdateRoleData, rolesUpdateRoleErrors, rolesUpdateRoleResponses, usersCreateUserData, usersCreateUserErrors, usersCreateUserResponses, usersDeleteUserData, usersDeleteUserErrors, usersDeleteUserMeData, usersDeleteUserMeResponses, usersDeleteUserResponses, usersReadUserByIdData, usersReadUserByIdErrors, usersReadUserByIdResponses, usersReadUserMeData, usersReadUserMeResponses, usersReadUsersData, usersReadUsersErrors, usersReadUsersResponses, usersRegisterUserData, usersRegisterUserErrors, usersRegisterUserResponses, usersUpdatePasswordMeData, usersUpdatePasswordMeErrors, usersUpdatePasswordMeResponses, usersUpdateUserData, usersUpdateUserErrors, usersUpdateUserMeData, usersUpdateUserMeErrors, usersUpdateUserMeResponses, usersUpdateUserResponses, utilsHealthCheckData, utilsHealthCheckResponses, utilsTestEmailData, utilsTestEmailErrors, utilsTestEmailResponses } from './types.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean, TResponse = unknown> = Options2<TData, ThrowOnError, TResponse> & {
     /**
@@ -360,6 +360,184 @@ export class ItemsService {
                 'Content-Type': 'application/json',
                 ...options.headers
             }
+        });
+    }
+}
+
+export class RolesService {
+    /**
+     * Read Roles
+     *
+     * Retrieve roles.
+     */
+    public static readRoles<ThrowOnError extends boolean = true>(options?: Options<rolesReadRolesData, ThrowOnError>) {
+        return (options?.client ?? client).get<rolesReadRolesResponses, rolesReadRolesErrors, ThrowOnError>({
+            responseType: 'json',
+            security: [{ scheme: 'bearer', type: 'http' }],
+            url: '/api/v1/roles/',
+            ...options
+        });
+    }
+
+    /**
+     * Read Role
+     *
+     * Get role by ID.
+     */
+    public static readRole<ThrowOnError extends boolean = true>(options: Options<rolesReadRoleData, ThrowOnError>) {
+        return (options.client ?? client).get<rolesReadRoleResponses, rolesReadRoleErrors, ThrowOnError>({
+            responseType: 'json',
+            security: [{ scheme: 'bearer', type: 'http' }],
+            url: '/api/v1/roles/{role_id}',
+            ...options
+        });
+    }
+
+    /**
+     * Create Role
+     *
+     * Create new role.
+     */
+    public static createRole<ThrowOnError extends boolean = true>(options: Options<rolesCreateRoleData, ThrowOnError>) {
+        return (options.client ?? client).post<rolesCreateRoleResponses, rolesCreateRoleErrors, ThrowOnError>({
+            responseType: 'json',
+            security: [{ scheme: 'bearer', type: 'http' }],
+            url: '/api/v1/roles/',
+            ...options,
+            headers: {
+                'Content-Type': 'application/json',
+                ...options.headers
+            }
+        });
+    }
+
+    /**
+     * Update Role
+     *
+     * Update a role.
+     */
+    public static updateRole<ThrowOnError extends boolean = true>(options: Options<rolesUpdateRoleData, ThrowOnError>) {
+        return (options.client ?? client).patch<rolesUpdateRoleResponses, rolesUpdateRoleErrors, ThrowOnError>({
+            responseType: 'json',
+            security: [{ scheme: 'bearer', type: 'http' }],
+            url: '/api/v1/roles/{role_id}',
+            ...options,
+            headers: {
+                'Content-Type': 'application/json',
+                ...options.headers
+            }
+        });
+    }
+
+    /**
+     * Assign Role Permissions
+     *
+     * Replace the full set of permissions granted by this role.
+     */
+    public static assignRolePermissions<ThrowOnError extends boolean = true>(options: Options<rolesAssignRolePermissionsData, ThrowOnError>) {
+        return (options.client ?? client).put<rolesAssignRolePermissionsResponses, rolesAssignRolePermissionsErrors, ThrowOnError>({
+            responseType: 'json',
+            security: [{ scheme: 'bearer', type: 'http' }],
+            url: '/api/v1/roles/{role_id}/permissions',
+            ...options,
+            headers: {
+                'Content-Type': 'application/json',
+                ...options.headers
+            }
+        });
+    }
+
+    /**
+     * Delete Role
+     *
+     * Delete a role.
+     */
+    public static deleteRole<ThrowOnError extends boolean = true>(options: Options<rolesDeleteRoleData, ThrowOnError>) {
+        return (options.client ?? client).delete<rolesDeleteRoleResponses, rolesDeleteRoleErrors, ThrowOnError>({
+            responseType: 'json',
+            security: [{ scheme: 'bearer', type: 'http' }],
+            url: '/api/v1/roles/{role_id}',
+            ...options
+        });
+    }
+}
+
+export class PermissionsService {
+    /**
+     * Read Permissions
+     *
+     * Retrieve permissions.
+     */
+    public static readPermissions<ThrowOnError extends boolean = true>(options?: Options<permissionsReadPermissionsData, ThrowOnError>) {
+        return (options?.client ?? client).get<permissionsReadPermissionsResponses, permissionsReadPermissionsErrors, ThrowOnError>({
+            responseType: 'json',
+            security: [{ scheme: 'bearer', type: 'http' }],
+            url: '/api/v1/permissions/',
+            ...options
+        });
+    }
+
+    /**
+     * Read Permission
+     *
+     * Get permission by ID.
+     */
+    public static readPermission<ThrowOnError extends boolean = true>(options: Options<permissionsReadPermissionData, ThrowOnError>) {
+        return (options.client ?? client).get<permissionsReadPermissionResponses, permissionsReadPermissionErrors, ThrowOnError>({
+            responseType: 'json',
+            security: [{ scheme: 'bearer', type: 'http' }],
+            url: '/api/v1/permissions/{permission_id}',
+            ...options
+        });
+    }
+
+    /**
+     * Create Permission
+     *
+     * Create new permission.
+     */
+    public static createPermission<ThrowOnError extends boolean = true>(options: Options<permissionsCreatePermissionData, ThrowOnError>) {
+        return (options.client ?? client).post<permissionsCreatePermissionResponses, permissionsCreatePermissionErrors, ThrowOnError>({
+            responseType: 'json',
+            security: [{ scheme: 'bearer', type: 'http' }],
+            url: '/api/v1/permissions/',
+            ...options,
+            headers: {
+                'Content-Type': 'application/json',
+                ...options.headers
+            }
+        });
+    }
+
+    /**
+     * Update Permission
+     *
+     * Update a permission.
+     */
+    public static updatePermission<ThrowOnError extends boolean = true>(options: Options<permissionsUpdatePermissionData, ThrowOnError>) {
+        return (options.client ?? client).patch<permissionsUpdatePermissionResponses, permissionsUpdatePermissionErrors, ThrowOnError>({
+            responseType: 'json',
+            security: [{ scheme: 'bearer', type: 'http' }],
+            url: '/api/v1/permissions/{permission_id}',
+            ...options,
+            headers: {
+                'Content-Type': 'application/json',
+                ...options.headers
+            }
+        });
+    }
+
+    /**
+     * Delete Permission
+     *
+     * Delete a permission.
+     */
+    public static deletePermission<ThrowOnError extends boolean = true>(options: Options<permissionsDeletePermissionData, ThrowOnError>) {
+        return (options.client ?? client).delete<permissionsDeletePermissionResponses, permissionsDeletePermissionErrors, ThrowOnError>({
+            responseType: 'json',
+            security: [{ scheme: 'bearer', type: 'http' }],
+            url: '/api/v1/permissions/{permission_id}',
+            ...options
         });
     }
 }

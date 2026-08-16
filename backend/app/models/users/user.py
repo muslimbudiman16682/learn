@@ -10,6 +10,7 @@ from app.models.base import get_datetime_utc
 
 if TYPE_CHECKING:
     from app.models.items.item import Item
+    from app.models.roles.role import Role
 
 
 # Shared properties (used by both the table model and the API schemas)
@@ -28,4 +29,8 @@ class User(UserBase, table=True):
         default_factory=get_datetime_utc,
         sa_type=DateTime(timezone=True),  # type: ignore
     )
+    role_id: uuid.UUID | None = Field(
+        default=None, foreign_key="role.id", ondelete="SET NULL"
+    )
+    role: "Role | None" = Relationship(back_populates="users")
     items: list["Item"] = Relationship(back_populates="owner", cascade_delete=True)
