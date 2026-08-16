@@ -2,13 +2,15 @@ from sqlmodel import Session, create_engine, select
 
 from app import crud
 from app.core.config import settings
-from app.models import User, UserCreate
+from app.models.users.user import User
+from app.schemas.users.user import UserCreate
 
 engine = create_engine(str(settings.DATABASE_URL))
 
 
-# make sure all SQLModel models are imported (app.models) before initializing DB
-# otherwise, SQLModel might fail to initialize relationships properly
+# Note: importing app.models.users.user above also runs app/models/__init__.py,
+# which imports every domain's table model. Keep that file up to date so
+# Alembic and SQLModel.metadata always see every table.
 # for more details: https://github.com/fastapi/full-stack-fastapi-template/issues/28
 
 
@@ -16,9 +18,7 @@ def init_db(session: Session) -> None:
     # Tables should be created with Alembic migrations
     # But if you don't want to use migrations, create
     # the tables un-commenting the next lines
-    # from sqlmodel import SQLModel
-
-    # This works because the models are already imported and registered from app.models
+    # from app.models import SQLModel
     # SQLModel.metadata.create_all(engine)
 
     user = session.exec(
