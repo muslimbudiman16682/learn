@@ -32,5 +32,5 @@ class User(UserBase, table=True):
     role_id: uuid.UUID | None = Field(
         default=None, foreign_key="role.id", ondelete="SET NULL"
     )
-    role: "Role | None" = Relationship(back_populates="users")
+    role: "Role" = Relationship(back_populates="users")
     items: list["Item"] = Relationship(back_populates="owner", cascade_delete=True)
