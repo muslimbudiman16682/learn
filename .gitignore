@@ -6,3 +6,8 @@ backend/app/frontend/
 /playwright-report/
 /blob-report/
 /playwright/.cache/
+
+# Environment secrets - never commit
+.env
+.env.*
+!.env.example
