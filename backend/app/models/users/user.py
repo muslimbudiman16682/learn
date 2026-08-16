@@ -1,6 +1,6 @@
 import uuid
 from datetime import datetime
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Optional
 
 from pydantic import EmailStr
 from sqlalchemy import DateTime
@@ -32,5 +32,5 @@ class User(UserBase, table=True):
     role_id: uuid.UUID | None = Field(
         default=None, foreign_key="role.id", ondelete="SET NULL"
     )
-    role: "Role" = Relationship(back_populates="users")
+    role: Optional["Role"] = Relationship(back_populates="users")
     items: list["Item"] = Relationship(back_populates="owner", cascade_delete=True)
