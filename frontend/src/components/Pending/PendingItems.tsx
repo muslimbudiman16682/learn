@@ -1,3 +1,5 @@
+import { useTranslation } from "react-i18next"
+
 import { Skeleton } from "@/components/ui/skeleton"
 import {
   Table,
@@ -8,15 +10,17 @@ import {
   TableRow,
 } from "@/components/ui/table"
 
-const PendingItems = () => (
+const PendingItems = () => {
+  const { t } = useTranslation()
+  return (
   <Table>
     <TableHeader>
       <TableRow>
-        <TableHead>ID</TableHead>
-        <TableHead>Title</TableHead>
-        <TableHead>Description</TableHead>
+        <TableHead>{t("items.columns.id")}</TableHead>
+        <TableHead>{t("items.columns.title")}</TableHead>
+        <TableHead>{t("items.columns.description")}</TableHead>
         <TableHead>
-          <span className="sr-only">Actions</span>
+          <span className="sr-only">{t("common.actions")}</span>
         </TableHead>
       </TableRow>
     </TableHeader>
@@ -41,6 +45,7 @@ const PendingItems = () => (
       ))}
     </TableBody>
   </Table>
-)
+  )
+}
 
 export default PendingItems

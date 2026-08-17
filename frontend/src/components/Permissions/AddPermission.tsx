@@ -1,8 +1,10 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
+import type { TFunction } from "i18next"
 import { Plus } from "lucide-react"
 import { useState } from "react"
 import { useForm } from "react-hook-form"
+import { useTranslation } from "react-i18next"
 import { z } from "zod"
 
 import { type PermissionCreate, PermissionsService } from "@/client"
@@ -30,17 +32,20 @@ import { LoadingButton } from "@/components/ui/loading-button"
 import useCustomToast from "@/hooks/useCustomToast"
 import { handleError } from "@/utils"
 
-const formSchema = z.object({
-  code: z.string().min(1, { message: "Code is required" }),
-  description: z.string().optional(),
-})
+const buildFormSchema = (t: TFunction) =>
+  z.object({
+    code: z.string().min(1, { message: t("validation.codeRequired") }),
+    description: z.string().optional(),
+  })
 
-type FormData = z.infer<typeof formSchema>
+type FormData = z.infer<ReturnType<typeof buildFormSchema>>
 
 const AddPermission = () => {
+  const { t } = useTranslation()
   const [isOpen, setIsOpen] = useState(false)
   const queryClient = useQueryClient()
   const { showSuccessToast, showErrorToast } = useCustomToast()
+  const formSchema = buildFormSchema(t)
 
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
@@ -56,7 +61,7 @@ const AddPermission = () => {
     mutationFn: (data: PermissionCreate) =>
       PermissionsService.createPermission({ body: data }),
     onSuccess: () => {
-      showSuccessToast("Permission created successfully")
+      showSuccessToast(t("permissions.toast.created"))
       form.reset()
       setIsOpen(false)
     },
@@ -75,14 +80,14 @@ const AddPermission = () => {
       <DialogTrigger asChild>
         <Button className="my-4">
           <Plus className="mr-2" />
-          Add Permission
+          {t("permissions.add")}
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle>Add Permission</DialogTitle>
+          <DialogTitle>{t("permissions.addDialog.title")}</DialogTitle>
           <DialogDescription>
-            Fill in the details to add a new permission.
+            {t("permissions.addDialog.description")}
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
@@ -94,11 +99,14 @@ const AddPermission = () => {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>
-                      Code <span className="text-destructive">*</span>
+                      {t("permissions.addDialog.codeLabel")}{" "}
+                      <span className="text-destructive">*</span>
                     </FormLabel>
                     <FormControl>
                       <Input
-                        placeholder="e.g. items:create"
+                        placeholder={t(
+                          "permissions.addDialog.codePlaceholder",
+                        )}
                         type="text"
                         {...field}
                         required
@@ -114,9 +122,17 @@ const AddPermission = () => {
                 name="description"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Description</FormLabel>
+                    <FormLabel>
+                      {t("permissions.addDialog.descriptionLabel")}
+                    </FormLabel>
                     <FormControl>
-                      <Input placeholder="Description" type="text" {...field} />
+                      <Input
+                        placeholder={t(
+                          "permissions.addDialog.descriptionPlaceholder",
+                        )}
+                        type="text"
+                        {...field}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -127,11 +143,11 @@ const AddPermission = () => {
             <DialogFooter>
               <DialogClose asChild>
                 <Button variant="outline" disabled={mutation.isPending}>
-                  Cancel
+                  {t("common.cancel")}
                 </Button>
               </DialogClose>
               <LoadingButton type="submit" loading={mutation.isPending}>
-                Save
+                {t("common.save")}
               </LoadingButton>
             </DialogFooter>
           </form>

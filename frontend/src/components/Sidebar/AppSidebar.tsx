@@ -1,6 +1,8 @@
 import { Briefcase, Home, Shield, ShieldCheck, Users } from "lucide-react"
+import { useTranslation } from "react-i18next"
 
 import { SidebarAppearance } from "@/components/Common/Appearance"
+import { SidebarLanguageSwitcher } from "@/components/Common/LanguageSwitcher"
 import { Logo } from "@/components/Common/Logo"
 import {
   Sidebar,
@@ -12,19 +14,20 @@ import useAuth from "@/hooks/useAuth"
 import { type Item, Main } from "./Main"
 import { User } from "./User"
 
-const baseItems: Item[] = [
-  { icon: Home, title: "Dashboard", path: "/" },
-  { icon: Briefcase, title: "Items", path: "/items" },
-]
-
-const superuserItems: Item[] = [
-  { icon: Users, title: "Admin", path: "/admin" },
-  { icon: Shield, title: "Roles", path: "/roles" },
-  { icon: ShieldCheck, title: "Permissions", path: "/permissions" },
-]
-
 export function AppSidebar() {
   const { user: currentUser } = useAuth()
+  const { t } = useTranslation()
+
+  const baseItems: Item[] = [
+    { icon: Home, title: t("sidebar.dashboard"), path: "/" },
+    { icon: Briefcase, title: t("sidebar.items"), path: "/items" },
+  ]
+
+  const superuserItems: Item[] = [
+    { icon: Users, title: t("sidebar.admin"), path: "/admin" },
+    { icon: Shield, title: t("sidebar.roles"), path: "/roles" },
+    { icon: ShieldCheck, title: t("sidebar.permissions"), path: "/permissions" },
+  ]
 
   const items = currentUser?.is_superuser
     ? [...baseItems, ...superuserItems]
@@ -39,6 +42,7 @@ export function AppSidebar() {
         <Main items={items} />
       </SidebarContent>
       <SidebarFooter>
+        <SidebarLanguageSwitcher />
         <SidebarAppearance />
         <User user={currentUser} />
       </SidebarFooter>

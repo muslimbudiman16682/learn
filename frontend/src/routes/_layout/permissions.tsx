@@ -1,13 +1,14 @@
 import { useSuspenseQuery } from "@tanstack/react-query"
 import { createFileRoute, redirect } from "@tanstack/react-router"
 import { ShieldCheck } from "lucide-react"
-import { Suspense } from "react"
+import { Suspense, useMemo } from "react"
+import { useTranslation } from "react-i18next"
 
 import { PermissionsService, UsersService } from "@/client"
 import { DataTable } from "@/components/Common/DataTable"
 import PendingPermissions from "@/components/Pending/PendingPermissions"
 import AddPermission from "@/components/Permissions/AddPermission"
-import { columns } from "@/components/Permissions/columns"
+import { getColumns } from "@/components/Permissions/columns"
 
 function getPermissionsQueryOptions() {
   return {
@@ -41,7 +42,9 @@ export const Route = createFileRoute("/_layout/permissions")({
 })
 
 function PermissionsTableContent() {
+  const { t } = useTranslation()
   const { data: permissions } = useSuspenseQuery(getPermissionsQueryOptions())
+  const columns = useMemo(() => getColumns(t), [t])
 
   if (permissions.data.length === 0) {
     return (
@@ -50,10 +53,10 @@ function PermissionsTableContent() {
           <ShieldCheck className="h-8 w-8 text-muted-foreground" />
         </div>
         <h3 className="text-lg font-semibold">
-          You don't have any permissions yet
+          {t("permissions.empty.title")}
         </h3>
         <p className="text-muted-foreground">
-          Add a new permission to get started
+          {t("permissions.empty.subtitle")}
         </p>
       </div>
     )
@@ -71,14 +74,16 @@ function PermissionsTable() {
 }
 
 function Permissions() {
+  const { t } = useTranslation()
+
   return (
     <div className="flex flex-col gap-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight">Permissions</h1>
-          <p className="text-muted-foreground">
-            Manage the permissions that can be granted to roles
-          </p>
+          <h1 className="text-2xl font-bold tracking-tight">
+            {t("permissions.title")}
+          </h1>
+          <p className="text-muted-foreground">{t("permissions.subtitle")}</p>
         </div>
         <AddPermission />
       </div>

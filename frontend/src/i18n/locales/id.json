@@ -1,0 +1,311 @@
+{
+  "common": {
+    "save": "Simpan",
+    "cancel": "Batal",
+    "delete": "Hapus",
+    "edit": "Ubah",
+    "actions": "Aksi",
+    "noResults": "Tidak ada hasil."
+  },
+  "validation": {
+    "required": "Kolom ini wajib diisi",
+    "passwordRequired": "Kata sandi wajib diisi",
+    "passwordMin": "Kata sandi minimal 8 karakter",
+    "invalidEmail": "Alamat email tidak valid",
+    "passwordsDontMatch": "Kata sandi tidak cocok",
+    "confirmPasswordRequired": "Konfirmasi kata sandi wajib diisi",
+    "fullNameRequired": "Nama lengkap wajib diisi",
+    "nameRequired": "Nama wajib diisi",
+    "codeRequired": "Kode wajib diisi"
+  },
+  "toast": {
+    "successTitle": "Berhasil!",
+    "errorTitle": "Terjadi kesalahan!",
+    "genericError": "Terjadi kesalahan."
+  },
+  "sidebar": {
+    "dashboard": "Dasbor",
+    "items": "Item",
+    "admin": "Admin",
+    "roles": "Peran",
+    "permissions": "Izin",
+    "appearance": "Tampilan",
+    "language": "Bahasa",
+    "light": "Terang",
+    "dark": "Gelap",
+    "system": "Sistem",
+    "toggleTheme": "Ganti tema"
+  },
+  "userMenu": {
+    "userSettings": "Pengaturan Pengguna",
+    "logOut": "Keluar"
+  },
+  "notFound": {
+    "title": "404",
+    "subtitle": "Ups!",
+    "message": "Halaman yang Anda cari tidak ditemukan.",
+    "goBack": "Kembali"
+  },
+  "errorPage": {
+    "title": "Error",
+    "subtitle": "Ups!",
+    "message": "Terjadi kesalahan. Silakan coba lagi.",
+    "goHome": "Ke Beranda"
+  },
+  "dashboard": {
+    "greeting": "Hai, {{name}} 👋",
+    "welcome": "Selamat datang kembali, senang bertemu Anda lagi!!!"
+  },
+  "auth": {
+    "login": {
+      "title": "Masuk ke akun Anda",
+      "email": "Email",
+      "password": "Kata Sandi",
+      "forgotPassword": "Lupa kata sandi?",
+      "submit": "Masuk",
+      "noAccount": "Belum punya akun?",
+      "signUp": "Daftar"
+    },
+    "signup": {
+      "title": "Buat akun",
+      "fullName": "Nama Lengkap",
+      "email": "Email",
+      "password": "Kata Sandi",
+      "confirmPassword": "Konfirmasi Kata Sandi",
+      "submit": "Daftar",
+      "haveAccount": "Sudah punya akun?",
+      "logIn": "Masuk"
+    },
+    "recoverPassword": {
+      "title": "Pemulihan Kata Sandi",
+      "email": "Email",
+      "submit": "Lanjutkan",
+      "rememberPassword": "Ingat kata sandi Anda?",
+      "logIn": "Masuk",
+      "successToast": "Email pemulihan kata sandi berhasil dikirim"
+    },
+    "resetPassword": {
+      "title": "Atur Ulang Kata Sandi",
+      "newPassword": "Kata Sandi Baru",
+      "confirmPassword": "Konfirmasi Kata Sandi",
+      "submit": "Atur Ulang Kata Sandi",
+      "rememberPassword": "Ingat kata sandi Anda?",
+      "logIn": "Masuk",
+      "successToast": "Kata sandi berhasil diperbarui"
+    }
+  },
+  "dataTable": {
+    "noResults": "Tidak ada hasil.",
+    "showingRange": "Menampilkan {{from}} sampai {{to}} dari",
+    "entries": "entri",
+    "rowsPerPage": "Baris per halaman",
+    "page": "Halaman",
+    "of": "dari",
+    "firstPage": "Ke halaman pertama",
+    "previousPage": "Ke halaman sebelumnya",
+    "nextPage": "Ke halaman berikutnya",
+    "lastPage": "Ke halaman terakhir"
+  },
+  "items": {
+    "title": "Item",
+    "subtitle": "Buat dan kelola item Anda",
+    "add": "Tambah Item",
+    "empty": {
+      "title": "Anda belum memiliki item",
+      "subtitle": "Tambahkan item baru untuk memulai"
+    },
+    "columns": {
+      "id": "ID",
+      "title": "Judul",
+      "description": "Deskripsi",
+      "noDescription": "Tidak ada deskripsi",
+      "copyId": "Salin ID"
+    },
+    "addDialog": {
+      "title": "Tambah Item",
+      "description": "Isi detail untuk menambahkan item baru.",
+      "titleLabel": "Judul",
+      "titlePlaceholder": "Judul",
+      "descriptionLabel": "Deskripsi",
+      "descriptionPlaceholder": "Deskripsi"
+    },
+    "editDialog": {
+      "title": "Ubah Item",
+      "description": "Perbarui detail item di bawah ini.",
+      "menuLabel": "Ubah Item"
+    },
+    "deleteDialog": {
+      "title": "Hapus Item",
+      "description": "Item ini akan dihapus secara permanen. Apakah Anda yakin? Tindakan ini tidak dapat dibatalkan.",
+      "menuLabel": "Hapus Item"
+    },
+    "toast": {
+      "created": "Item berhasil dibuat",
+      "updated": "Item berhasil diperbarui",
+      "deleted": "Item berhasil dihapus"
+    }
+  },
+  "admin": {
+    "title": "Pengguna",
+    "subtitle": "Kelola akun pengguna dan izin",
+    "add": "Tambah Pengguna",
+    "columns": {
+      "fullName": "Nama Lengkap",
+      "email": "Email",
+      "role": "Peran",
+      "status": "Status",
+      "superuser": "Superuser",
+      "user": "Pengguna",
+      "active": "Aktif",
+      "inactive": "Tidak aktif",
+      "you": "Anda",
+      "notAvailable": "T/A"
+    },
+    "addDialog": {
+      "title": "Tambah Pengguna",
+      "description": "Isi formulir di bawah ini untuk menambahkan pengguna baru ke sistem.",
+      "emailLabel": "Email",
+      "fullNameLabel": "Nama Lengkap",
+      "passwordLabel": "Atur Kata Sandi",
+      "confirmPasswordLabel": "Konfirmasi Kata Sandi",
+      "roleLabel": "Peran",
+      "noRole": "Tanpa peran",
+      "isSuperuser": "Jadikan superuser?",
+      "isActive": "Jadikan aktif?"
+    },
+    "editDialog": {
+      "title": "Ubah Pengguna",
+      "description": "Perbarui detail pengguna di bawah ini.",
+      "menuLabel": "Ubah Pengguna"
+    },
+    "deleteDialog": {
+      "title": "Hapus Pengguna",
+      "description": "Semua item milik pengguna ini juga akan dihapus secara permanen. Apakah Anda yakin? Tindakan ini tidak dapat dibatalkan.",
+      "menuLabel": "Hapus Pengguna"
+    },
+    "toast": {
+      "created": "Pengguna berhasil dibuat",
+      "updated": "Pengguna berhasil diperbarui",
+      "deleted": "Pengguna berhasil dihapus"
+    }
+  },
+  "roles": {
+    "title": "Peran",
+    "subtitle": "Buat peran dan atur izin apa saja yang diberikan",
+    "add": "Tambah Peran",
+    "empty": {
+      "title": "Anda belum memiliki peran",
+      "subtitle": "Tambahkan peran baru untuk memulai"
+    },
+    "columns": {
+      "name": "Nama",
+      "description": "Deskripsi",
+      "noDescription": "Tidak ada deskripsi",
+      "permissions": "Izin",
+      "permissionCount_one": "{{count}} izin",
+      "permissionCount_other": "{{count}} izin"
+    },
+    "addDialog": {
+      "title": "Tambah Peran",
+      "description": "Isi detail untuk menambahkan peran baru.",
+      "nameLabel": "Nama",
+      "namePlaceholder": "cth. Editor",
+      "descriptionLabel": "Deskripsi",
+      "descriptionPlaceholder": "Deskripsi"
+    },
+    "editDialog": {
+      "title": "Ubah Peran",
+      "description": "Perbarui detail peran di bawah ini.",
+      "menuLabel": "Ubah Peran"
+    },
+    "deleteDialog": {
+      "title": "Hapus Peran",
+      "description": "Peran ini akan dihapus secara permanen. Pengguna yang saat ini memiliki peran ini akan menjadi tanpa peran. Apakah Anda yakin? Tindakan ini tidak dapat dibatalkan.",
+      "menuLabel": "Hapus Peran"
+    },
+    "managePermissions": {
+      "menuLabel": "Kelola Izin",
+      "title": "Kelola Izin",
+      "description": "Pilih izin apa saja yang diberikan oleh peran \"{{name}}\".",
+      "loading": "Memuat izin...",
+      "empty": "Belum ada izin. Buat izin terlebih dahulu."
+    },
+    "toast": {
+      "created": "Peran berhasil dibuat",
+      "updated": "Peran berhasil diperbarui",
+      "deleted": "Peran berhasil dihapus",
+      "permissionsUpdated": "Izin peran berhasil diperbarui",
+      "duplicateName": "Peran dengan nama ini sudah ada"
+    }
+  },
+  "permissions": {
+    "title": "Izin",
+    "subtitle": "Kelola izin yang dapat diberikan kepada peran",
+    "add": "Tambah Izin",
+    "empty": {
+      "title": "Anda belum memiliki izin",
+      "subtitle": "Tambahkan izin baru untuk memulai"
+    },
+    "columns": {
+      "code": "Kode",
+      "description": "Deskripsi",
+      "noDescription": "Tidak ada deskripsi"
+    },
+    "addDialog": {
+      "title": "Tambah Izin",
+      "description": "Isi detail untuk menambahkan izin baru.",
+      "codeLabel": "Kode",
+      "codePlaceholder": "cth. items:create",
+      "descriptionLabel": "Deskripsi",
+      "descriptionPlaceholder": "Deskripsi"
+    },
+    "editDialog": {
+      "title": "Ubah Izin",
+      "description": "Perbarui detail izin di bawah ini.",
+      "menuLabel": "Ubah Izin"
+    },
+    "deleteDialog": {
+      "title": "Hapus Izin",
+      "description": "Izin ini akan dihapus secara permanen, dan dihapus dari semua peran yang memilikinya. Apakah Anda yakin? Tindakan ini tidak dapat dibatalkan.",
+      "menuLabel": "Hapus Izin"
+    },
+    "toast": {
+      "created": "Izin berhasil dibuat",
+      "updated": "Izin berhasil diperbarui",
+      "deleted": "Izin berhasil dihapus"
+    }
+  },
+  "settings": {
+    "title": "Pengaturan Pengguna",
+    "subtitle": "Kelola pengaturan dan preferensi akun Anda",
+    "tabs": {
+      "profile": "Profil saya",
+      "password": "Kata Sandi",
+      "dangerZone": "Zona berbahaya"
+    },
+    "userInfo": {
+      "title": "Informasi Pengguna",
+      "fullNameLabel": "Nama lengkap",
+      "emailLabel": "Email",
+      "notSet": "T/A",
+      "edit": "Ubah",
+      "toastUpdated": "Pengguna berhasil diperbarui"
+    },
+    "changePassword": {
+      "title": "Ubah Kata Sandi",
+      "currentPasswordLabel": "Kata Sandi Saat Ini",
+      "newPasswordLabel": "Kata Sandi Baru",
+      "confirmPasswordLabel": "Konfirmasi Kata Sandi",
+      "submit": "Perbarui Kata Sandi",
+      "toastUpdated": "Kata sandi berhasil diperbarui"
+    },
+    "deleteAccount": {
+      "title": "Hapus Akun",
+      "description": "Hapus akun dan semua data terkait secara permanen.",
+      "trigger": "Hapus Akun",
+      "confirmTitle": "Konfirmasi Diperlukan",
+      "confirmDescription": "Semua data akun Anda akan dihapus secara permanen. Jika Anda yakin, klik \"Konfirmasi\" untuk melanjutkan. Tindakan ini tidak dapat dibatalkan.",
+      "toastDeleted": "Akun Anda telah berhasil dihapus"
+    }
+  }
+}

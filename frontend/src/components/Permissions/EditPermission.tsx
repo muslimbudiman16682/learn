@@ -1,8 +1,10 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
+import type { TFunction } from "i18next"
 import { Pencil } from "lucide-react"
 import { useState } from "react"
 import { useForm } from "react-hook-form"
+import { useTranslation } from "react-i18next"
 import { z } from "zod"
 
 import { type PermissionPublic, PermissionsService } from "@/client"
@@ -30,12 +32,13 @@ import { LoadingButton } from "@/components/ui/loading-button"
 import useCustomToast from "@/hooks/useCustomToast"
 import { handleError } from "@/utils"
 
-const formSchema = z.object({
-  code: z.string().min(1, { message: "Code is required" }),
-  description: z.string().optional(),
-})
+const buildFormSchema = (t: TFunction) =>
+  z.object({
+    code: z.string().min(1, { message: t("validation.codeRequired") }),
+    description: z.string().optional(),
+  })
 
-type FormData = z.infer<typeof formSchema>
+type FormData = z.infer<ReturnType<typeof buildFormSchema>>
 
 interface EditPermissionProps {
   permission: PermissionPublic
@@ -43,9 +46,11 @@ interface EditPermissionProps {
 }
 
 const EditPermission = ({ permission, onSuccess }: EditPermissionProps) => {
+  const { t } = useTranslation()
   const [isOpen, setIsOpen] = useState(false)
   const queryClient = useQueryClient()
   const { showSuccessToast, showErrorToast } = useCustomToast()
+  const formSchema = buildFormSchema(t)
 
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
@@ -64,7 +69,7 @@ const EditPermission = ({ permission, onSuccess }: EditPermissionProps) => {
         body: data,
       }),
     onSuccess: () => {
-      showSuccessToast("Permission updated successfully")
+      showSuccessToast(t("permissions.toast.updated"))
       setIsOpen(false)
       onSuccess()
     },
@@ -85,15 +90,15 @@ const EditPermission = ({ permission, onSuccess }: EditPermissionProps) => {
         onClick={() => setIsOpen(true)}
       >
         <Pencil />
-        Edit Permission
+        {t("permissions.editDialog.menuLabel")}
       </DropdownMenuItem>
       <DialogContent className="sm:max-w-md">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
             <DialogHeader>
-              <DialogTitle>Edit Permission</DialogTitle>
+              <DialogTitle>{t("permissions.editDialog.title")}</DialogTitle>
               <DialogDescription>
-                Update the permission details below.
+                {t("permissions.editDialog.description")}
               </DialogDescription>
             </DialogHeader>
             <div className="grid gap-4 py-4">
@@ -103,10 +108,17 @@ const EditPermission = ({ permission, onSuccess }: EditPermissionProps) => {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>
-                      Code <span className="text-destructive">*</span>
+                      {t("permissions.addDialog.codeLabel")}{" "}
+                      <span className="text-destructive">*</span>
                     </FormLabel>
                     <FormControl>
-                      <Input placeholder="e.g. items:create" type="text" {...field} />
+                      <Input
+                        placeholder={t(
+                          "permissions.addDialog.codePlaceholder",
+                        )}
+                        type="text"
+                        {...field}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -118,9 +130,17 @@ const EditPermission = ({ permission, onSuccess }: EditPermissionProps) => {
                 name="description"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Description</FormLabel>
+                    <FormLabel>
+                      {t("permissions.addDialog.descriptionLabel")}
+                    </FormLabel>
                     <FormControl>
-                      <Input placeholder="Description" type="text" {...field} />
+                      <Input
+                        placeholder={t(
+                          "permissions.addDialog.descriptionPlaceholder",
+                        )}
+                        type="text"
+                        {...field}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -131,11 +151,11 @@ const EditPermission = ({ permission, onSuccess }: EditPermissionProps) => {
             <DialogFooter>
               <DialogClose asChild>
                 <Button variant="outline" disabled={mutation.isPending}>
-                  Cancel
+                  {t("common.cancel")}
                 </Button>
               </DialogClose>
               <LoadingButton type="submit" loading={mutation.isPending}>
-                Save
+                {t("common.save")}
               </LoadingButton>
             </DialogFooter>
           </form>

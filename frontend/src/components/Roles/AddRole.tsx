@@ -1,8 +1,10 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
+import type { TFunction } from "i18next"
 import { Plus } from "lucide-react"
 import { useState } from "react"
 import { useForm } from "react-hook-form"
+import { useTranslation } from "react-i18next"
 import { z } from "zod"
 
 import { type RoleCreate, RolesService } from "@/client"
@@ -30,17 +32,20 @@ import { LoadingButton } from "@/components/ui/loading-button"
 import useCustomToast from "@/hooks/useCustomToast"
 import { handleError } from "@/utils"
 
-const formSchema = z.object({
-  name: z.string().min(1, { message: "Name is required" }),
-  description: z.string().optional(),
-})
+const buildFormSchema = (t: TFunction) =>
+  z.object({
+    name: z.string().min(1, { message: t("validation.nameRequired") }),
+    description: z.string().optional(),
+  })
 
-type FormData = z.infer<typeof formSchema>
+type FormData = z.infer<ReturnType<typeof buildFormSchema>>
 
 const AddRole = () => {
+  const { t } = useTranslation()
   const [isOpen, setIsOpen] = useState(false)
   const queryClient = useQueryClient()
   const { showSuccessToast, showErrorToast } = useCustomToast()
+  const formSchema = buildFormSchema(t)
 
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
@@ -55,7 +60,7 @@ const AddRole = () => {
   const mutation = useMutation({
     mutationFn: (data: RoleCreate) => RolesService.createRole({ body: data }),
     onSuccess: () => {
-      showSuccessToast("Role created successfully")
+      showSuccessToast(t("roles.toast.created"))
       form.reset()
       setIsOpen(false)
     },
@@ -74,14 +79,14 @@ const AddRole = () => {
       <DialogTrigger asChild>
         <Button className="my-4">
           <Plus className="mr-2" />
-          Add Role
+          {t("roles.add")}
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle>Add Role</DialogTitle>
+          <DialogTitle>{t("roles.addDialog.title")}</DialogTitle>
           <DialogDescription>
-            Fill in the details to add a new role.
+            {t("roles.addDialog.description")}
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
@@ -93,10 +98,16 @@ const AddRole = () => {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>
-                      Name <span className="text-destructive">*</span>
+                      {t("roles.addDialog.nameLabel")}{" "}
+                      <span className="text-destructive">*</span>
                     </FormLabel>
                     <FormControl>
-                      <Input placeholder="e.g. Editor" type="text" {...field} required />
+                      <Input
+                        placeholder={t("roles.addDialog.namePlaceholder")}
+                        type="text"
+                        {...field}
+                        required
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -108,9 +119,17 @@ const AddRole = () => {
                 name="description"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Description</FormLabel>
+                    <FormLabel>
+                      {t("roles.addDialog.descriptionLabel")}
+                    </FormLabel>
                     <FormControl>
-                      <Input placeholder="Description" type="text" {...field} />
+                      <Input
+                        placeholder={t(
+                          "roles.addDialog.descriptionPlaceholder",
+                        )}
+                        type="text"
+                        {...field}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -121,11 +140,11 @@ const AddRole = () => {
             <DialogFooter>
               <DialogClose asChild>
                 <Button variant="outline" disabled={mutation.isPending}>
-                  Cancel
+                  {t("common.cancel")}
                 </Button>
               </DialogClose>
               <LoadingButton type="submit" loading={mutation.isPending}>
-                Save
+                {t("common.save")}
               </LoadingButton>
             </DialogFooter>
           </form>

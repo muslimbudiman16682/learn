@@ -1,8 +1,10 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
+import type { TFunction } from "i18next"
 import { Pencil } from "lucide-react"
 import { useState } from "react"
 import { useForm } from "react-hook-form"
+import { useTranslation } from "react-i18next"
 import { z } from "zod"
 
 import { type RolePublic, RolesService } from "@/client"
@@ -30,12 +32,13 @@ import { LoadingButton } from "@/components/ui/loading-button"
 import useCustomToast from "@/hooks/useCustomToast"
 import { handleError } from "@/utils"
 
-const formSchema = z.object({
-  name: z.string().min(1, { message: "Name is required" }),
-  description: z.string().optional(),
-})
+const buildFormSchema = (t: TFunction) =>
+  z.object({
+    name: z.string().min(1, { message: t("validation.nameRequired") }),
+    description: z.string().optional(),
+  })
 
-type FormData = z.infer<typeof formSchema>
+type FormData = z.infer<ReturnType<typeof buildFormSchema>>
 
 interface EditRoleProps {
   role: RolePublic
@@ -43,9 +46,11 @@ interface EditRoleProps {
 }
 
 const EditRole = ({ role, onSuccess }: EditRoleProps) => {
+  const { t } = useTranslation()
   const [isOpen, setIsOpen] = useState(false)
   const queryClient = useQueryClient()
   const { showSuccessToast, showErrorToast } = useCustomToast()
+  const formSchema = buildFormSchema(t)
 
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
@@ -61,7 +66,7 @@ const EditRole = ({ role, onSuccess }: EditRoleProps) => {
     mutationFn: (data: FormData) =>
       RolesService.updateRole({ path: { role_id: role.id }, body: data }),
     onSuccess: () => {
-      showSuccessToast("Role updated successfully")
+      showSuccessToast(t("roles.toast.updated"))
       setIsOpen(false)
       onSuccess()
     },
@@ -82,15 +87,15 @@ const EditRole = ({ role, onSuccess }: EditRoleProps) => {
         onClick={() => setIsOpen(true)}
       >
         <Pencil />
-        Edit Role
+        {t("roles.editDialog.menuLabel")}
       </DropdownMenuItem>
       <DialogContent className="sm:max-w-md">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
             <DialogHeader>
-              <DialogTitle>Edit Role</DialogTitle>
+              <DialogTitle>{t("roles.editDialog.title")}</DialogTitle>
               <DialogDescription>
-                Update the role details below.
+                {t("roles.editDialog.description")}
               </DialogDescription>
             </DialogHeader>
             <div className="grid gap-4 py-4">
@@ -100,10 +105,15 @@ const EditRole = ({ role, onSuccess }: EditRoleProps) => {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>
-                      Name <span className="text-destructive">*</span>
+                      {t("roles.addDialog.nameLabel")}{" "}
+                      <span className="text-destructive">*</span>
                     </FormLabel>
                     <FormControl>
-                      <Input placeholder="e.g. Editor" type="text" {...field} />
+                      <Input
+                        placeholder={t("roles.addDialog.namePlaceholder")}
+                        type="text"
+                        {...field}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -115,9 +125,17 @@ const EditRole = ({ role, onSuccess }: EditRoleProps) => {
                 name="description"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Description</FormLabel>
+                    <FormLabel>
+                      {t("roles.addDialog.descriptionLabel")}
+                    </FormLabel>
                     <FormControl>
-                      <Input placeholder="Description" type="text" {...field} />
+                      <Input
+                        placeholder={t(
+                          "roles.addDialog.descriptionPlaceholder",
+                        )}
+                        type="text"
+                        {...field}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -128,11 +146,11 @@ const EditRole = ({ role, onSuccess }: EditRoleProps) => {
             <DialogFooter>
               <DialogClose asChild>
                 <Button variant="outline" disabled={mutation.isPending}>
-                  Cancel
+                  {t("common.cancel")}
                 </Button>
               </DialogClose>
               <LoadingButton type="submit" loading={mutation.isPending}>
-                Save
+                {t("common.save")}
               </LoadingButton>
             </DialogFooter>
           </form>

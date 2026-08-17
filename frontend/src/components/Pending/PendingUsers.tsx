@@ -1,3 +1,5 @@
+import { useTranslation } from "react-i18next"
+
 import { Skeleton } from "@/components/ui/skeleton"
 import {
   Table,
@@ -8,16 +10,18 @@ import {
   TableRow,
 } from "@/components/ui/table"
 
-const PendingUsers = () => (
+const PendingUsers = () => {
+  const { t } = useTranslation()
+  return (
   <Table>
     <TableHeader>
       <TableRow>
-        <TableHead>Full Name</TableHead>
-        <TableHead>Email</TableHead>
-        <TableHead>Role</TableHead>
-        <TableHead>Status</TableHead>
+        <TableHead>{t("admin.columns.fullName")}</TableHead>
+        <TableHead>{t("admin.columns.email")}</TableHead>
+        <TableHead>{t("admin.columns.role")}</TableHead>
+        <TableHead>{t("admin.columns.status")}</TableHead>
         <TableHead>
-          <span className="sr-only">Actions</span>
+          <span className="sr-only">{t("common.actions")}</span>
         </TableHead>
       </TableRow>
     </TableHeader>
@@ -48,6 +52,7 @@ const PendingUsers = () => (
       ))}
     </TableBody>
   </Table>
-)
+  )
+}
 
 export default PendingUsers

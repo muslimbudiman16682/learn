@@ -2,6 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { Trash2 } from "lucide-react"
 import { useState } from "react"
 import { useForm } from "react-hook-form"
+import { useTranslation } from "react-i18next"
 
 import { PermissionsService } from "@/client"
 import { Button } from "@/components/ui/button"
@@ -25,6 +26,7 @@ interface DeletePermissionProps {
 }
 
 const DeletePermission = ({ id, onSuccess }: DeletePermissionProps) => {
+  const { t } = useTranslation()
   const [isOpen, setIsOpen] = useState(false)
   const queryClient = useQueryClient()
   const { showSuccessToast, showErrorToast } = useCustomToast()
@@ -37,7 +39,7 @@ const DeletePermission = ({ id, onSuccess }: DeletePermissionProps) => {
   const mutation = useMutation({
     mutationFn: deletePermission,
     onSuccess: () => {
-      showSuccessToast("The permission was deleted successfully")
+      showSuccessToast(t("permissions.toast.deleted"))
       setIsOpen(false)
       onSuccess()
     },
@@ -59,23 +61,21 @@ const DeletePermission = ({ id, onSuccess }: DeletePermissionProps) => {
         onClick={() => setIsOpen(true)}
       >
         <Trash2 />
-        Delete Permission
+        {t("permissions.deleteDialog.menuLabel")}
       </DropdownMenuItem>
       <DialogContent className="sm:max-w-md">
         <form onSubmit={handleSubmit(onSubmit)}>
           <DialogHeader>
-            <DialogTitle>Delete Permission</DialogTitle>
+            <DialogTitle>{t("permissions.deleteDialog.title")}</DialogTitle>
             <DialogDescription>
-              This permission will be permanently deleted, and removed from any
-              roles that grant it. Are you sure? You will not be able to undo
-              this action.
+              {t("permissions.deleteDialog.description")}
             </DialogDescription>
           </DialogHeader>
 
           <DialogFooter className="mt-4">
             <DialogClose asChild>
               <Button variant="outline" disabled={mutation.isPending}>
-                Cancel
+                {t("common.cancel")}
               </Button>
             </DialogClose>
             <LoadingButton
@@ -83,7 +83,7 @@ const DeletePermission = ({ id, onSuccess }: DeletePermissionProps) => {
               type="submit"
               loading={mutation.isPending}
             >
-              Delete
+              {t("common.delete")}
             </LoadingButton>
           </DialogFooter>
         </form>

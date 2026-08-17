@@ -5,7 +5,9 @@ import {
   Link as RouterLink,
   redirect,
 } from "@tanstack/react-router"
+import type { TFunction } from "i18next"
 import { useForm } from "react-hook-form"
+import { useTranslation } from "react-i18next"
 import { z } from "zod"
 
 import { LoginService } from "@/client"
@@ -24,11 +26,12 @@ import { isLoggedIn } from "@/hooks/useAuth"
 import useCustomToast from "@/hooks/useCustomToast"
 import { handleError } from "@/utils"
 
-const formSchema = z.object({
-  email: z.email({ message: "Invalid email address" }),
-})
+const buildFormSchema = (t: TFunction) =>
+  z.object({
+    email: z.email({ message: t("validation.invalidEmail") }),
+  })
 
-type FormData = z.infer<typeof formSchema>
+type FormData = z.infer<ReturnType<typeof buildFormSchema>>
 
 export const Route = createFileRoute("/recover-password")({
   component: RecoverPassword,
@@ -49,6 +52,8 @@ export const Route = createFileRoute("/recover-password")({
 })
 
 function RecoverPassword() {
+  const { t } = useTranslation()
+  const formSchema = buildFormSchema(t)
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -66,7 +71,7 @@ function RecoverPassword() {
   const mutation = useMutation({
     mutationFn: recoverPassword,
     onSuccess: () => {
-      showSuccessToast("Password recovery email sent successfully")
+      showSuccessToast(t("auth.recoverPassword.successToast"))
       form.reset()
     },
     onError: handleError.bind(showErrorToast),
@@ -85,7 +90,9 @@ function RecoverPassword() {
           className="flex flex-col gap-6"
         >
           <div className="flex flex-col items-center gap-2 text-center">
-            <h1 className="text-2xl font-bold">Password Recovery</h1>
+            <h1 className="text-2xl font-bold">
+              {t("auth.recoverPassword.title")}
+            </h1>
           </div>
 
           <div className="grid gap-4">
@@ -94,7 +101,7 @@ function RecoverPassword() {
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Email</FormLabel>
+                  <FormLabel>{t("auth.recoverPassword.email")}</FormLabel>
                   <FormControl>
                     <Input
                       data-testid="email-input"
@@ -113,14 +120,14 @@ function RecoverPassword() {
               className="w-full"
               loading={mutation.isPending}
             >
-              Continue
+              {t("auth.recoverPassword.submit")}
             </LoadingButton>
           </div>
 
           <div className="text-center text-sm">
-            Remember your password?{" "}
+            {t("auth.recoverPassword.rememberPassword")}{" "}
             <RouterLink to="/login" className="underline underline-offset-4">
-              Log in
+              {t("auth.recoverPassword.logIn")}
             </RouterLink>
           </div>
         </form>

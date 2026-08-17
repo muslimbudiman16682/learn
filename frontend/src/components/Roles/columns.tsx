@@ -1,21 +1,22 @@
 import type { ColumnDef } from "@tanstack/react-table"
+import type { TFunction } from "i18next"
 
 import type { RolePublic } from "@/client"
 import { Badge } from "@/components/ui/badge"
 import { cn } from "@/lib/utils"
 import { RoleActionsMenu } from "./RoleActionsMenu"
 
-export const columns: ColumnDef<RolePublic>[] = [
+export const getColumns = (t: TFunction): ColumnDef<RolePublic>[] => [
   {
     accessorKey: "name",
-    header: "Name",
+    header: t("roles.columns.name"),
     cell: ({ row }) => (
       <span className="font-medium">{row.original.name}</span>
     ),
   },
   {
     accessorKey: "description",
-    header: "Description",
+    header: t("roles.columns.description"),
     cell: ({ row }) => {
       const description = row.original.description
       return (
@@ -25,26 +26,26 @@ export const columns: ColumnDef<RolePublic>[] = [
             !description && "italic",
           )}
         >
-          {description || "No description"}
+          {description || t("roles.columns.noDescription")}
         </span>
       )
     },
   },
   {
     id: "permissions",
-    header: "Permissions",
+    header: t("roles.columns.permissions"),
     cell: ({ row }) => {
       const count = row.original.permissions?.length ?? 0
       return (
         <Badge variant={count > 0 ? "secondary" : "outline"}>
-          {count} {count === 1 ? "permission" : "permissions"}
+          {t("roles.columns.permissionCount", { count })}
         </Badge>
       )
     },
   },
   {
     id: "actions",
-    header: () => <span className="sr-only">Actions</span>,
+    header: () => <span className="sr-only">{t("common.actions")}</span>,
     cell: ({ row }) => (
       <div className="flex justify-end">
         <RoleActionsMenu role={row.original} />

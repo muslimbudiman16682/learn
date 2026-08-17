@@ -1,13 +1,14 @@
 import { useSuspenseQuery } from "@tanstack/react-query"
 import { createFileRoute, redirect } from "@tanstack/react-router"
 import { Shield } from "lucide-react"
-import { Suspense } from "react"
+import { Suspense, useMemo } from "react"
+import { useTranslation } from "react-i18next"
 
 import { RolesService, UsersService } from "@/client"
 import { DataTable } from "@/components/Common/DataTable"
 import PendingRoles from "@/components/Pending/PendingRoles"
 import AddRole from "@/components/Roles/AddRole"
-import { columns } from "@/components/Roles/columns"
+import { getColumns } from "@/components/Roles/columns"
 
 function getRolesQueryOptions() {
   return {
@@ -37,7 +38,9 @@ export const Route = createFileRoute("/_layout/roles")({
 })
 
 function RolesTableContent() {
+  const { t } = useTranslation()
   const { data: roles } = useSuspenseQuery(getRolesQueryOptions())
+  const columns = useMemo(() => getColumns(t), [t])
 
   if (roles.data.length === 0) {
     return (
@@ -45,8 +48,8 @@ function RolesTableContent() {
         <div className="rounded-full bg-muted p-4 mb-4">
           <Shield className="h-8 w-8 text-muted-foreground" />
         </div>
-        <h3 className="text-lg font-semibold">You don't have any roles yet</h3>
-        <p className="text-muted-foreground">Add a new role to get started</p>
+        <h3 className="text-lg font-semibold">{t("roles.empty.title")}</h3>
+        <p className="text-muted-foreground">{t("roles.empty.subtitle")}</p>
       </div>
     )
   }
@@ -63,14 +66,16 @@ function RolesTable() {
 }
 
 function Roles() {
+  const { t } = useTranslation()
+
   return (
     <div className="flex flex-col gap-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight">Roles</h1>
-          <p className="text-muted-foreground">
-            Create roles and control which permissions they grant
-          </p>
+          <h1 className="text-2xl font-bold tracking-tight">
+            {t("roles.title")}
+          </h1>
+          <p className="text-muted-foreground">{t("roles.subtitle")}</p>
         </div>
         <AddRole />
       </div>

@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { ShieldCheck } from "lucide-react"
 import { useState } from "react"
+import { useTranslation } from "react-i18next"
 
 import { PermissionsService, type RolePublic, RolesService } from "@/client"
 import { Button } from "@/components/ui/button"
@@ -29,6 +30,7 @@ const ManageRolePermissions = ({
   role,
   onSuccess,
 }: ManageRolePermissionsProps) => {
+  const { t } = useTranslation()
   const [isOpen, setIsOpen] = useState(false)
   const [selectedIds, setSelectedIds] = useState<Set<string>>(
     () => new Set((role.permissions ?? []).map((p) => p.id)),
@@ -73,7 +75,7 @@ const ManageRolePermissions = ({
         body: { permission_ids: Array.from(selectedIds) },
       }),
     onSuccess: () => {
-      showSuccessToast("Role permissions updated successfully")
+      showSuccessToast(t("roles.toast.permissionsUpdated"))
       setIsOpen(false)
       onSuccess()
     },
@@ -90,25 +92,25 @@ const ManageRolePermissions = ({
         onClick={() => handleOpenChange(true)}
       >
         <ShieldCheck />
-        Manage Permissions
+        {t("roles.managePermissions.menuLabel")}
       </DropdownMenuItem>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle>Manage Permissions</DialogTitle>
+          <DialogTitle>{t("roles.managePermissions.title")}</DialogTitle>
           <DialogDescription>
-            Choose which permissions the "{role.name}" role grants.
+            {t("roles.managePermissions.description", { name: role.name })}
           </DialogDescription>
         </DialogHeader>
 
         <div className="max-h-80 overflow-y-auto py-2">
           {isPending && (
             <p className="text-sm text-muted-foreground">
-              Loading permissions...
+              {t("roles.managePermissions.loading")}
             </p>
           )}
           {!isPending && permissions?.data.length === 0 && (
             <p className="text-sm text-muted-foreground">
-              No permissions exist yet. Create one first.
+              {t("roles.managePermissions.empty")}
             </p>
           )}
           <div className="flex flex-col gap-3">
@@ -140,7 +142,7 @@ const ManageRolePermissions = ({
         <DialogFooter>
           <DialogClose asChild>
             <Button variant="outline" disabled={mutation.isPending}>
-              Cancel
+              {t("common.cancel")}
             </Button>
           </DialogClose>
           <LoadingButton
@@ -148,7 +150,7 @@ const ManageRolePermissions = ({
             loading={mutation.isPending}
             onClick={() => mutation.mutate()}
           >
-            Save
+            {t("common.save")}
           </LoadingButton>
         </DialogFooter>
       </DialogContent>
