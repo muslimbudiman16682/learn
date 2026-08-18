@@ -2,7 +2,7 @@ import uuid
 from datetime import datetime
 
 from pydantic import EmailStr
-from sqlmodel import BaseModel, Field
+from sqlmodel import BaseModel, Field  # ty:ignore[unresolved-import]
 
 
 class UserBase(BaseModel):
