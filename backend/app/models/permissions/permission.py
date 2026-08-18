@@ -1,3 +1,4 @@
+from app.models import RolePermissionLink
 from sqlmodel import Field, SQLModel, Relationship
 import uuid
 from datetime import datetime
@@ -24,5 +25,5 @@ class Permission(PermissionBase, table=True):
     )
     is_protected: bool = Field(default=False, description="Prevent deletion if True")
     roles: list["Role"] = Relationship(
-        back_populates="permissions", link_model=...  # kept link model in migration
+        back_populates="permissions", link_model=RolePermissionLink  # kept link model in migration
     )
