@@ -3,7 +3,6 @@ import uuid
 from datetime import datetime
 from sqlalchemy import DateTime
 from typing import TYPE_CHECKING
-
 from app.models.base import get_datetime_utc
 
 if TYPE_CHECKING:
