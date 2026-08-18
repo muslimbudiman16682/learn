@@ -9,6 +9,19 @@ if TYPE_CHECKING:
     from app.models.roles.role import Role
 
 
+class RolePermissionLink(SQLModel, table=True):
+    """Join table: which permissions a role grants."""
+
+    __tablename__ = "role_permission_link"
+
+    role_id: uuid.UUID = Field(
+        foreign_key="role.id", primary_key=True, ondelete="CASCADE"
+    )
+    permission_id: uuid.UUID = Field(
+        foreign_key="permission.id", primary_key=True, ondelete="CASCADE"
+    )
+
+
 class PermissionBase(SQLModel):
     # e.g. "items:create", "users:delete" -- namespaced so 100 domains stay collision-free
     code: str = Field(unique=True, index=True, max_length=100)
@@ -23,5 +36,5 @@ class Permission(PermissionBase, table=True):
     )
     is_protected: bool = Field(default=False, description="Prevent deletion if True")
     roles: list["Role"] = Relationship(
-        back_populates="permissions", link_model=...  # kept link model in migration
+        back_populates="permissions", link_model=RolePermissionLink
     )
