@@ -1,6 +1,8 @@
+from sqlmodel import Session, col, select
+from typing import List
 import uuid
 
-from sqlmodel import Session, col, select
+from fastapi import HTTPException
 
 from app.models.permissions.permission import Permission
 from app.models.roles.role import Role
@@ -39,8 +41,9 @@ def delete_role(*, session: Session, db_role: Role) -> None:
 
 
 def set_role_permissions(
-    *, session: Session, db_role: Role, permission_ids: list[uuid.UUID]
+    *, session: Session, db_role: Role, permission_ids: List[uuid.UUID]
 ) -> Role:
+    # Fetch existing permissions for provided IDs
     permissions = (
         session.exec(
             select(Permission).where(col(Permission.id).in_(permission_ids))
@@ -48,6 +51,12 @@ def set_role_permissions(
         if permission_ids
         else []
     )
+
+    found_ids = {p.id for p in permissions}
+    missing = [str(pid) for pid in permission_ids if pid not in found_ids]
+    if missing:
+        raise HTTPException(status_code=400, detail=f"Invalid permission_ids: {missing}")
+
     db_role.permissions = list(permissions)
     session.add(db_role)
     session.commit()
