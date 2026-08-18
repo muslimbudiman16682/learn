@@ -1,4 +1,4 @@
-from sqlmodel import Field, SQLModel
+from sqlmodel import Field, SQLModel, Relationship
 import uuid
 from datetime import datetime
 from sqlalchemy import DateTime
