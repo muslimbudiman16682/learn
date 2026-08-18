@@ -8,10 +8,17 @@ from pwdlib.hashers.bcrypt import BcryptHasher
 
 from app.core.config import settings
 
+# Explicit Argon2 and bcrypt parameters — adjust and test performance in your environment.
+# Recommended starting values (tune based on latency requirements):
+# - Argon2: time_cost=2, memory_cost=65536 (64 MiB), parallelism=1
+# - bcrypt: rounds=12
+argon2 = Argon2Hasher(time_cost=2, memory_cost=65536, parallelism=1)
+bcrypt = BcryptHasher(rounds=12)
+
 password_hash = PasswordHash(
     (
-        Argon2Hasher(),
-        BcryptHasher(),
+        argon2,
+        bcrypt,
     )
 )
 
