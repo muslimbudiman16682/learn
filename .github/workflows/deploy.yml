@@ -28,7 +28,7 @@ jobs:
         with:
           bun-version: 1.3.12
       - name: Install frontend dependencies
-        run: bun intall
+        run: bun install
       - name: Build frontend
         run: bun run --filter frontend build
         env:
