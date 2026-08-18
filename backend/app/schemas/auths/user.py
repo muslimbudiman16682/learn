@@ -2,7 +2,6 @@ import uuid
 from datetime import datetime
 
 from pydantic import BaseModel, Field, EmailStr
-from sqlmodel import SQLModel
 
 
 class UserBase(BaseModel):
@@ -50,12 +49,12 @@ class UserInDB(UserPublic):
     hashed_password: str
 
 
-class UsersPublic(SQLModel):
+class UsersPublic(BaseModel):
     data: list[UserPublic]
     count: int
 
 
-class UpdatePassword(SQLModel):
+class UpdatePassword(BaseModel):
     current_password: str
     new_password: str
 
