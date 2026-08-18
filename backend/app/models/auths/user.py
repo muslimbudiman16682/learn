@@ -2,27 +2,27 @@ import uuid
 from datetime import datetime
 from typing import TYPE_CHECKING
 
-from pydantic import EmailStr
-from sqlalchemy import Column, TIMESTAMP
+from sqlalchemy import Column, DateTime
 from sqlmodel import Field, Relationship, SQLModel
 
 from app.models.base import get_datetime_utc
 
 
 if TYPE_CHECKING:
+    from app.models.auths.role import Role
     from app.models.items.item import Item
-    from app.models.roles.role import Role
 
 
 class UserBase(SQLModel):
-    email: EmailStr = Field(
+    email: str = Field(
         unique=True,
         index=True,
         max_length=255,
-        sa_type=str,
     )
+
     is_active: bool = True
     is_superuser: bool = False
+
     full_name: str | None = Field(
         default=None,
         max_length=255,
@@ -30,6 +30,8 @@ class UserBase(SQLModel):
 
 
 class User(UserBase, table=True):
+    __tablename__ = "user"
+
     id: uuid.UUID = Field(
         default_factory=uuid.uuid4,
         primary_key=True,
@@ -40,7 +42,7 @@ class User(UserBase, table=True):
     created_at: datetime = Field(
         default_factory=get_datetime_utc,
         sa_column=Column(
-            TIMESTAMP(timezone=True),
+            DateTime(timezone=True),
             nullable=False,
         ),
     )
@@ -49,7 +51,6 @@ class User(UserBase, table=True):
         default=None,
         foreign_key="role.id",
         ondelete="SET NULL",
-        nullable=True,
     )
 
     role: "Role | None" = Relationship(

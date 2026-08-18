@@ -1,11 +1,11 @@
-# app/models/roles/role_permission_link.py
-
 import uuid
 
 from sqlmodel import Field, SQLModel
 
 
-class RolePermissionLink(SQLModel, table=True):
+class RolePermission(SQLModel, table=True):
+    __tablename__ = "role_permission"
+
     role_id: uuid.UUID = Field(
         foreign_key="role.id",
         primary_key=True,
