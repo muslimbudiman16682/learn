@@ -6,11 +6,9 @@ from sqlalchemy import DateTime
 from sqlmodel import Field, Relationship, SQLModel
 
 from app.models.base import get_datetime_utc
-from app.models.permissions.permission import RolePermissionLink
 
 if TYPE_CHECKING:
     from app.models.permissions.permission import Permission
-    from app.models.users.user import User
 
 
 class RoleBase(SQLModel):
@@ -24,7 +22,8 @@ class Role(RoleBase, table=True):
         default_factory=get_datetime_utc,
         sa_type=DateTime(timezone=True),  # type: ignore
     )
+    is_protected: bool = Field(default=False, description="Prevent deletion if True")
     users: list["User"] = Relationship(back_populates="role")
     permissions: list["Permission"] = Relationship(
-        back_populates="roles", link_model=RolePermissionLink
+        back_populates="roles", link_model=...  # kept link model in migration
     )
