@@ -4,21 +4,20 @@ like `from app.schemas import XyzCreate` keep working project-wide.
 """
 
 from app.schemas.common import Message, NewPassword, Token, TokenPayload
-from app.schemas.items.item import ItemCreate, ItemPublic, ItemsPublic, ItemUpdate
-from app.schemas.permissions.permission import (
+from app.schemas.auths.permission import (
     PermissionCreate,
     PermissionPublic,
     PermissionsPublic,
     PermissionUpdate,
 )
-from app.schemas.roles.role import (
+from app.schemas.auths.role import (
     RoleCreate,
     RolePermissionsAssign,
     RolePublic,
     RolesPublic,
     RoleUpdate,
 )
-from app.schemas.users.user import (
+from app.schemas.auths.user import (
     UpdatePassword,
     UserCreate,
     UserPublic,
@@ -33,10 +32,6 @@ __all__ = [
     "NewPassword",
     "Token",
     "TokenPayload",
-    "ItemCreate",
-    "ItemPublic",
-    "ItemsPublic",
-    "ItemUpdate",
     "PermissionCreate",
     "PermissionPublic",
     "PermissionsPublic",

@@ -6,9 +6,9 @@ from sqlmodel import func, select
 
 from app import crud
 from app.api.deps import SessionDep, get_current_active_superuser
-from app.models.roles.role import Role
+from app.models.auths.role import Role
 from app.schemas.common import Message
-from app.schemas.roles.role import (
+from app.schemas.auths.role import (
     RoleCreate,
     RolePermissionsAssign,
     RolePublic,
@@ -103,3 +103,4 @@ def delete_role(session: SessionDep, role_id: uuid.UUID) -> Message:
     session.delete(role)
     session.commit()
     return Message(message="Role deleted successfully")
+

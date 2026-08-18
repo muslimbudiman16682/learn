@@ -4,8 +4,8 @@ from sqlmodel import Session
 
 from app import crud
 from app.core.security import verify_password
-from app.models.users.user import User
-from app.schemas.users.user import UserCreate, UserUpdate
+from app.models.auths.user import User
+from app.schemas.auths.user import UserCreate, UserUpdate
 from tests.utils.utils import random_email, random_lower_string
 
 
@@ -129,3 +129,4 @@ def test_authenticate_user_with_bcrypt_upgrades_to_argon2(db: Session) -> None:
     assert verified
     # Should not need another update since it's already argon2
     assert updated_hash is None
+

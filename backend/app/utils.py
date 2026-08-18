@@ -25,7 +25,7 @@ class EmailData:
 def render_email_template(*, template_name: str, context: dict[str, Any]) -> str:
     template_str = (
         Path(__file__).parent / "email-templates" / template_name
-    ).read_text()
+    ).read_text(encoding="utf-8")
     html_content = Template(template_str).render(context)
     return html_content
 
@@ -36,7 +36,9 @@ def send_email(
     subject: str = "",
     html_content: str = "",
 ) -> None:
-    assert settings.emails_enabled, "no provided configuration for email variables"
+    if not settings.emails_enabled:
+        logger.info("email configuration not provided; skipping send_email")
+        return
     assert settings.EMAILS_FROM_EMAIL  # For type checker
     message = emails.message.Message(
         subject=subject,

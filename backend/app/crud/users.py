@@ -1,8 +1,8 @@
 from sqlmodel import Session, select
 
 from app.core.security import get_password_hash, verify_password
-from app.models.users.user import User
-from app.schemas.users.user import UserCreate, UserUpdate
+from app.models.auths.user import User
+from app.schemas.auths.user import UserCreate, UserUpdate
 
 
 def create_user(*, session: Session, user_create: UserCreate) -> User:
@@ -54,3 +54,4 @@ def authenticate(*, session: Session, email: str, password: str) -> User | None:
         session.commit()
         session.refresh(db_user)
     return db_user
+

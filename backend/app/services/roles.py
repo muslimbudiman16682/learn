@@ -6,8 +6,8 @@ from fastapi import HTTPException
 from sqlmodel import Session
 
 from app import crud
-from app.models.roles.role import Role
-from app.schemas.roles.role import RoleCreate
+from app.models.auths.role import Role
+from app.schemas.auths.role import RoleCreate
 
 
 def create_role(*, session: Session, role_in: RoleCreate) -> Role:
@@ -16,3 +16,4 @@ def create_role(*, session: Session, role_in: RoleCreate) -> Role:
             status_code=400, detail="A role with this name already exists"
         )
     return crud.create_role(session=session, role_in=role_in)
+

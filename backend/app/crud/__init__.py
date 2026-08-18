@@ -4,7 +4,6 @@ working the way it did with the old single crud.py file. Add each new
 domain's module here too.
 """
 
-from app.crud.items import create_item
 from app.crud.permissions import (
     create_permission,
     delete_permission,
@@ -29,7 +28,6 @@ from app.crud.users import (
 )
 
 __all__ = [
-    "create_item",
     "create_permission",
     "delete_permission",
     "get_permission",

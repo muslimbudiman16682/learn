@@ -3,8 +3,8 @@ from sqlmodel import Session
 
 from app import crud
 from app.core.config import settings
-from app.models.users.user import User
-from app.schemas.users.user import UserCreate, UserUpdate
+from app.models.auths.user import User
+from app.schemas.auths.user import UserCreate, UserUpdate
 from tests.utils.utils import random_email, random_lower_string
 
 
@@ -48,3 +48,4 @@ def authentication_token_from_email(
         user = crud.update_user(session=db, db_user=user, user_in=user_in_update)
 
     return user_authentication_headers(client=client, email=email, password=password)
+

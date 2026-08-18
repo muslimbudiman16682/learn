@@ -1,6 +1,6 @@
 import uuid
 from datetime import datetime
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Optional, List
 
 from sqlalchemy import Column, DateTime
 from sqlmodel import Field, Relationship, SQLModel
@@ -10,7 +10,6 @@ from app.models.base import get_datetime_utc
 
 if TYPE_CHECKING:
     from app.models.auths.role import Role
-    from app.models.items.item import Item
 
 
 class UserBase(SQLModel):
@@ -47,16 +46,13 @@ class User(UserBase, table=True):
         ),
     )
 
-    role_id: uuid.UUID | None = Field(
+    role_id: Optional[uuid.UUID] = Field(
         default=None,
         foreign_key="role.id",
         ondelete="SET NULL",
     )
 
-    role: "Role | None" = Relationship(
+    role: Optional["Role"] = Relationship(
         back_populates="users",
     )
 
-    items: list["Item"] = Relationship(
-        back_populates="owner",
-    )

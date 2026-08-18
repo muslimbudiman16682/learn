@@ -11,10 +11,9 @@ from app.api.deps import (
     get_current_active_superuser,
 )
 from app.core.security import get_password_hash, verify_password
-from app.models.items.item import Item
-from app.models.users.user import User
+from app.models.auths.user import User
 from app.schemas.common import Message
-from app.schemas.users.user import (
+from app.schemas.auths.user import (
     UpdatePassword,
     UserCreate,
     UserPublic,
@@ -47,7 +46,7 @@ def read_users(session: SessionDep, skip: int = 0, limit: int = 100) -> Any:
     )
     users = session.exec(statement).all()
 
-    users_public = [UserPublic.model_validate(user) for user in users]
+    users_public = [UserPublic.model_validate(user.model_dump()) for user in users]
     return UsersPublic(data=users_public, count=count)
 
 
@@ -196,8 +195,8 @@ def delete_user(
         raise HTTPException(
             status_code=403, detail="Super users are not allowed to delete themselves"
         )
-    statement = delete(Item).where(col(Item.owner_id) == user_id)
-    session.exec(statement)
     session.delete(user)
     session.commit()
     return Message(message="User deleted successfully")
+
+

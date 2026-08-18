@@ -6,8 +6,8 @@ from fastapi import HTTPException
 from sqlmodel import Session
 
 from app import crud
-from app.models.permissions.permission import Permission
-from app.schemas.permissions.permission import PermissionCreate
+from app.models.auths.permission import Permission
+from app.schemas.auths.permission import PermissionCreate
 
 
 def create_permission(
@@ -18,3 +18,4 @@ def create_permission(
             status_code=400, detail="A permission with this code already exists"
         )
     return crud.create_permission(session=session, permission_in=permission_in)
+

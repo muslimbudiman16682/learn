@@ -5,9 +5,9 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlmodel import func, select
 
 from app.api.deps import SessionDep, get_current_active_superuser
-from app.models.permissions.permission import Permission
+from app.models.auths.permission import Permission
 from app.schemas.common import Message
-from app.schemas.permissions.permission import (
+from app.schemas.auths.permission import (
     PermissionCreate,
     PermissionPublic,
     PermissionsPublic,
@@ -92,3 +92,4 @@ def delete_permission(session: SessionDep, permission_id: uuid.UUID) -> Message:
     session.delete(permission)
     session.commit()
     return Message(message="Permission deleted successfully")
+

@@ -1,16 +1,16 @@
 import uuid
 from datetime import datetime
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, List
 
 from sqlalchemy import Column, DateTime
 from sqlmodel import Field, Relationship, SQLModel
 
 from app.models.base import get_datetime_utc
+from app.models.auths.role_permission import RolePermission
 
 
 if TYPE_CHECKING:
     from app.models.auths.role import Role
-    from app.models.auths.role_permission import RolePermission
 
 
 class PermissionBase(SQLModel):
@@ -47,7 +47,7 @@ class Permission(PermissionBase, table=True):
         description="Prevent deletion if True",
     )
 
-    roles: list["Role"] = Relationship(
+    roles: List["Role"] = Relationship(
         back_populates="permissions",
         link_model=RolePermission,
     )

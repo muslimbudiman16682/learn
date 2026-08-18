@@ -5,8 +5,8 @@ from pydantic import BaseModel
 
 from app.api.deps import SessionDep
 from app.core.security import get_password_hash
-from app.models.users.user import User
-from app.schemas.users.user import UserPublic
+from app.models.auths.user import User
+from app.schemas.auths.user import UserPublic
 
 router = APIRouter(tags=["private"], prefix="/private")
 
@@ -34,3 +34,4 @@ def create_user(user_in: PrivateUserCreate, session: SessionDep) -> Any:
     session.commit()
 
     return user
+

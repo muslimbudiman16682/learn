@@ -4,9 +4,9 @@ import uuid
 
 from fastapi import HTTPException
 
-from app.models.permissions.permission import Permission
-from app.models.roles.role import Role
-from app.schemas.roles.role import RoleCreate, RoleUpdate
+from app.models.auths.permission import Permission
+from app.models.auths.role import Role
+from app.schemas.auths.role import RoleCreate, RoleUpdate
 
 
 def create_role(*, session: Session, role_in: RoleCreate) -> Role:
@@ -62,3 +62,4 @@ def set_role_permissions(
     session.commit()
     session.refresh(db_role)
     return db_role
+

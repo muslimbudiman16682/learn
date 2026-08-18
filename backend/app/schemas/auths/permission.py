@@ -2,6 +2,7 @@ import uuid
 from datetime import datetime
 
 from pydantic import BaseModel, Field
+from sqlmodel import SQLModel
 
 
 class PermissionBase(BaseModel):
@@ -36,3 +37,8 @@ class PermissionPublic(PermissionBase):
     id: uuid.UUID
     is_protected: bool
     created_at: datetime
+
+
+class PermissionsPublic(SQLModel):
+    data: list[PermissionPublic]
+    count: int

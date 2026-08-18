@@ -2,7 +2,7 @@ from fastapi.testclient import TestClient
 from sqlmodel import Session, select
 
 from app.core.config import settings
-from app.models.users.user import User
+from app.models.auths.user import User
 
 
 def test_create_user(client: TestClient, db: Session) -> None:
@@ -24,3 +24,4 @@ def test_create_user(client: TestClient, db: Session) -> None:
     assert user
     assert user.email == "pollo@listo.com"
     assert user.full_name == "Pollo Listo"
+

@@ -11,8 +11,8 @@ from sqlmodel import Session
 
 from app import crud
 from app.core.config import settings
-from app.models.users.user import User
-from app.schemas.users.user import UserCreate, UserRegister
+from app.models.auths.user import User
+from app.schemas.auths.user import UserCreate, UserRegister
 from app.utils import generate_new_account_email, send_email
 
 
@@ -36,6 +36,7 @@ def create_user_as_admin(*, session: Session, user_in: UserCreate) -> User:
         )
     user = crud.create_user(session=session, user_create=user_in)
     if settings.emails_enabled and user_in.email:
+        # generate_new_account_email expects (email_to, username, password)
         email_data = generate_new_account_email(
             email_to=user_in.email, username=user_in.email, password=user_in.password
         )
@@ -56,3 +57,4 @@ def assert_email_available(
         raise HTTPException(
             status_code=409, detail="User with this email already exists"
         )
+

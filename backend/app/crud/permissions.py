@@ -2,8 +2,8 @@ import uuid
 
 from sqlmodel import Session, select
 
-from app.models.permissions.permission import Permission
-from app.schemas.permissions.permission import PermissionCreate, PermissionUpdate
+from app.models.auths.permission import Permission
+from app.schemas.auths.permission import PermissionCreate, PermissionUpdate
 
 
 def create_permission(
@@ -39,3 +39,4 @@ def update_permission(
 def delete_permission(*, session: Session, db_permission: Permission) -> None:
     session.delete(db_permission)
     session.commit()
+

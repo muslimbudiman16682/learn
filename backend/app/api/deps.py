@@ -1,5 +1,6 @@
 from collections.abc import Generator
 from typing import Annotated
+import uuid
 
 import jwt
 from fastapi import Depends, HTTPException, status
@@ -11,7 +12,7 @@ from sqlmodel import Session
 from app.core import security
 from app.core.config import settings
 from app.core.db import engine
-from app.models.users.user import User
+from app.models.auths.user import User
 from app.schemas.common import TokenPayload
 
 reusable_oauth2 = OAuth2PasswordBearer(
@@ -39,7 +40,19 @@ def get_current_user(session: SessionDep, token: TokenDep) -> User:
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Could not validate credentials",
         )
-    user = session.get(User, token_data.sub)
+    if not token_data.sub:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Could not validate credentials",
+        )
+    try:
+        user_id = uuid.UUID(token_data.sub)
+    except (ValueError, TypeError):
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Could not validate credentials",
+        )
+    user = session.get(User, user_id)
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
     if not user.is_active:
@@ -56,3 +69,4 @@ def get_current_active_superuser(current_user: CurrentUser) -> User:
             status_code=403, detail="The user doesn't have enough privileges"
         )
     return current_user
+
